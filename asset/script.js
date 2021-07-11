@@ -6,6 +6,7 @@ const forecastContainer = document.getElementById('forecasts-container');
 const cityHistory = document.getElementById("city-history");
 const searchButton = document.getElementById("city-search");
 
+const currentDate = moment().format("l")
 const cities = [];
 
 
@@ -41,7 +42,7 @@ function generateIconUrl(iconCode){
 // output: the data as whole from both current weather api and the one call api
 function fetchWeather(city) {
     return fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
     )
         .then((response) => response.json())
         .then((response) => {
@@ -61,7 +62,7 @@ function fetchWeather(city) {
 
 function fetchOnecall(lon, lat) {
     return fetch(
-        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}`
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`
     ).then((response) => response.json());
 }
 
@@ -69,14 +70,16 @@ function createTodayCard(cityName, temp, wind, humidity, uvi) {
     const article = document.createElement("article");
     article.setAttribute("class", "card");
     article.setAttribute("class", "border-radius:0");
+    
+    const capitaliseCity = cityName.charAt(0).toUpperCase() + cityName.slice(1);
 
-    const h1 = document.createElement("h1");
-    h1.textContent = cityName;
+    const h2 = document.createElement("h1");
+    h2.textContent = capitaliseCity + " " + currentDate;
 
-    article.appendChild(h1);
+    article.appendChild(h2);
 
     const tempEl = document.createElement("p");
-    tempEl.textContent = "Temp: " + temp + " °F";
+    tempEl.textContent = "Temp: " + temp + " °C";
     article.appendChild(tempEl);
 
     const windEl = document.createElement("p");
@@ -108,7 +111,7 @@ function createForecastCard(date, icon, temp, wind, humidity) {
     iconEl.src = generateIconUrl(icon)
     article.appendChild(iconEl);   
     const tempEl = document.createElement("p");
-    tempEl.textContent = "Temp: " + temp + " °F";
+    tempEl.textContent = "Temp: " + temp + " °C";
     article.appendChild(tempEl);
 
     const windEl = document.createElement("p");
