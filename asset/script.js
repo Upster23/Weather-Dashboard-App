@@ -17,7 +17,7 @@ function renderCities() {
         const city = cityNames[i];
         const li = document.createElement("li");
         li.setAttribute('class', 'clickable' )
-        li.setAttribute('class', 'd-flex align-items-center')
+        li.setAttribute('class', 'd-flex align-items-center text-capitalize')
         li.textContent = city;
 
         li.addEventListener('click', function(event){
@@ -25,8 +25,6 @@ function renderCities() {
 
             // run the main query
             queryWeatherDashboard(city);
-
-
         })
 
         cityHistory.appendChild(li);
@@ -99,15 +97,15 @@ function createTodayCard(cityName, temp, wind, humidity, uvi, iconCode) {
     article.appendChild(tempEl);
 
     const windEl = document.createElement("p");
-    windEl.textContent = "wind: " + wind + " km/h";
+    windEl.textContent = "Wind: " + wind + " km/h";
     article.appendChild(windEl);
 
     const humidityEl = document.createElement("p");
-    humidityEl.textContent = "humidity: " + humidity + " %";
+    humidityEl.textContent = "Humidity: " + humidity + " %";
     article.appendChild(humidityEl);
 
     const uvEl = document.createElement("p");
-    uvEl.textContent = "uv: " + uvi;
+    uvEl.textContent = "UV: " + uvi;
     article.appendChild(uvEl);
 
     return article;
@@ -130,11 +128,11 @@ function createForecastCard(date, icon, temp, wind, humidity) {
     article.appendChild(tempEl);
 
     const windEl = document.createElement("p");
-    windEl.textContent = "wind: " + wind + " km/h";
+    windEl.textContent = "Wind: " + wind + " km/h";
     article.appendChild(windEl);
 
     const humidityEl = document.createElement("p");
-    humidityEl.textContent = "humidity: " + humidity + "%";
+    humidityEl.textContent = "Humidity: " + humidity + "%";
     article.appendChild(humidityEl);
 
     return article;
@@ -172,11 +170,6 @@ function queryWeatherDashboard(city){
     // run fetch weather
     return fetchWeather(city).then((response) => {
 
-        const cities = JSON.parse(localStorage.getItem('cityNames')) || [];
-
-        cities.push(city);
-
-        storeCities(cities);
         // today's section
         // temp
         const todayTemp = response.currentWeather.main.temp;
@@ -209,13 +202,9 @@ function queryWeatherDashboard(city){
             // for each iteration
             // create a card, containing:
             // date
-
             // icon
-
             // temp
-
             // wind
-
             // humidity
             const card = createForecastCard(
                 fromUnix(forecast.dt),
@@ -237,11 +226,23 @@ formSearch.addEventListener("submit", function (event) {
 
     //grab the user input
     const city = inputCity.value.trim();
+    const cities = JSON.parse(localStorage.getItem('cityNames')) || [];
 
     // Push user input into cities array
     if (city === "") {
         return;
     }
+
+    if (cities.includes(city)) {
+        return;
+    }
+
+    else {
+        cities.push(city);
+
+        storeCities(cities);
+    }
+
 
     queryWeatherDashboard(city)
         .then(function() {
