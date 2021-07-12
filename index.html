@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Your Weather Dashboard App</title>
         <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -23,23 +23,27 @@
                 <div class="col-3">
                     <!-- search col -->
 
-                    <label for="input-city" id="city-header">
-                        Search for a City
-                    </label>
-                    <input type="text" id="input-city" placeholder="Input city here!" >
+                    <form id="form-search">
+                        <label for="input-city" id="city-header">
+                            Search for a City
+                        </label>
+                        <input
+                            type="text"
+                            id="input-city"
+                            placeholder="Input city here!"
+                        />
+    
+                        <button class="d-block" id="city-search">Search</button>
+                    </form>
 
-                    <button class="d-block" id = "city-search">Search</button>
-                    <hr>
-                    <ul id = "city-history"></ul>
-                  
+                    <hr />
+                    <ul class="no-padding ul-no-dots" id="city-history"></ul>
                 </div>
 
                 <div class="col-9">
-                    <div class="row" id = "today-forecast">
-                        <div class="col today-container" >
+                    <div class="row" id="today-forecast">
+                        <div class="col today-container">
                             <!-- todays weather -->
-                       
-
                         </div>
                     </div>
 
@@ -47,12 +51,22 @@
                         <h4><strong>5-Day Forecast:</strong></h4>
                     </div>
 
-                    <div class="d-flex justify-content-between rounder-0" id="forecasts-container">
+                    <div
+                        class="d-flex justify-content-between rounder-0"
+                        id="forecasts-container"
+                    >
                         <!-- 5 day forecasts -->
                     </div>
                 </div>
             </div>
         </div>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+            integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
 
         <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
